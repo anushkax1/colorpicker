@@ -1,33 +1,61 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-function App() {
-  const [value, setValue] = useState('');
+
+const ColorPicker = () => {
+  const [showColorOptions, setShowColorOptions] = useState(false);
+  const [selectedColor, setSelectedColor] = useState('');
+
+  const colors = [
+    '#c6acc9',
+    '#ecb4bf',
+    '#fdd6b5',
+    '#fdf3b8',
+    '#a7e4ae',
+    '#bfffe6',
+    '#8699d1',
+    '#dba9ce',
+    '#aae7e8',
+    '#efe6eb',
+    '#47d1d5',
+    '#e8d2ff',
+    '#c1d1fd',
+    '#d9e0fc',
+    '#ffe0f1',
+  ];
+  
+
+  const toggleColorOptions = () => {
+    setShowColorOptions(!showColorOptions);
+  };
+
+  const changeBackgroundColor = (color) => {
+    document.body.style.backgroundColor = color;
+    setSelectedColor(color);
+    setShowColorOptions(false); 
+  };
+
   return (
-    <div className="calculator-grid">
-      <div className="output">
-        <input type="text" value={value}/>
-      </div>
-
-      <input type="button" className="span-two" value="AC" onClick={e=> setValue('')}/>
-<input type="button" value="DEL" onClick={e=> setValue(value.slice(0, -1))}/>
-<input type="button" value="+" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="1" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="2" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="3" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="/" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="4" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="5" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="6" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="+" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="7" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="8" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="9" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="-" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="0" onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" value="." onClick={e=> setValue(value + e.target.value)}/>
-<input type="button" className="span-two" value="=" onClick={e=> setValue(eval(value))}/>
+    <div className="color-picker-container">
+      <h1>Color Picker</h1>
+      <br />
+      <button onClick={toggleColorOptions}>
+        {showColorOptions ? 'Hide Color Options' : 'Pick a Color'}
+      </button>
+      {showColorOptions && (
+        <div className="bGButton">
+          {colors.map((color, index) => (
+            <button
+              key={index}
+              className="color-button"
+              style={{ backgroundColor: color }}
+              onClick={() => changeBackgroundColor(color)}
+            />
+          ))}
+        </div>
+      )}
+      
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default ColorPicker;
